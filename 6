@@ -1,0 +1,148 @@
+@model IEnumerable<productcatelog.Models.product> 
+ 
+@{ 
+    ViewBag.Title = "Index"; 
+    Layout = null; 
+} 
+ 
+<h2>Product Catalog</h2> 
+<h1>SAIDEEP 92400120590</h1> 
+ 
+<table border="1"> 
+    <thead> 
+        <tr> 
+            <th>Product Id</th> 
+            <th>Product Name</th> 
+            <th>Description</th> 
+            <th>Price</th> 
+            <th>Category</th> 
+            <th>Action</th> 
+        </tr> 
+    </thead>  
+    <tbody> 
+        @foreach (var product in Model) 
+        { 
+            <tr> 
+                <td>@product.ProductId</td> 
+                <td>@product.ProductName</td> 
+                <td>@product.Description</td> 
+                <td>@product.Price</td> 
+                <td>@product.Category</td> 
+                <td> 
+                    @Html.ActionLink("View Details", "Details", "Product",                         new { id = product.ProductId }, null) 
+                </td> 
+            </tr> 
+        } 
+    </tbody> 
+</table> 
+ 
+b. Product.cs 
+ 
+using System; using System.Collections.Generic; using System.Linq; using System.Web; 
+ 
+namespace productcatelog.Models 
+{ 
+    public class product 
+    { 
+        public int ProductId { get; set; }         public string ProductName { get; set; }         public string Description { get; set; }         public decimal Price { get; set; }         public string Category { get; set; } 
+    } 
+} 
+ 
+c. Index.cshtml 
+ 
+@model IEnumerable<productcatelog.Models.product> 
+ 
+@{ 
+    ViewBag.Title = "Index"; 
+    Layout = null; 
+} 
+ 
+<h2>Product Catalog</h2> 
+<h1>SAIDEEP 9240120590</h1> 
+ 
+<table border="1"> 
+    <thead> 
+        <tr> 
+            <th>Product Id</th> 
+            <th>Product Name</th> 
+            <th>Description</th> 
+            <th>Price</th> 
+            <th>Category</th> 
+            <th>Action</th> 
+        </tr> 
+    </thead> 
+ 
+    <tbody> 
+        @foreach (var product in Model) 
+        { 
+            <tr> 
+                <td>@product.ProductId</td> 
+                <td>@product.ProductName</td> 
+                <td>@product.Description</td> 
+                <td>@product.Price</td>                 <td>@product.Category</td> 
+                <td> 
+                    @Html.ActionLink("View Details", "Details", "Product",                         new { id = product.ProductId }, null) 
+                </td> 
+            </tr> 
+        } 
+    </tbody> 
+ 
+</table> 
+ 
+d. Details.cshtml  
+@model productcatelog.Models.product @{     ViewBag.Title = "Details"; 
+} 
+ 
+@{     Layout = null; 
+} 
+ 
+<h2>Product Details</h2> 
+ 
+@if (Model != null) 
+{ 
+    <p>Product Id: @Model.ProductId</p> 
+ 
+    <p>Product Name: @Model.ProductName</p> 
+ 
+ 
+    <p>Description: @Model.Description</p> 
+ 
+    <p>Price: @Model.Price</p> 
+ 
+    <p>Category: @Model.Category</p> 
+} 
+else 
+{ 
+    <p>Product not found.</p> 
+} 
+ 
+<br /> 
+ 
+@Html.ActionLink("Back to Product Catalog", "Index", "Product") 
+ 
+ 
+ 
+ 
+ 
+e. RouteConfig.cs 
+ 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.Mvc; using System.Web.Routing; 
+ 
+namespace productcatelog 
+{ 
+    public class RouteConfig 
+    { 
+        public static void RegisterRoutes(RouteCollection routes) 
+        { 
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}"); 
+ 
+            routes.MapRoute(                 name: "Default", 
+                url: "{controller}/{action}/{id}", 
+                defaults: new { controller = "product", action = "Index", id = 
+UrlParameter.Optional } 
+            ); 
+        } 
+    } 
+}
